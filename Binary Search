@@ -1,0 +1,57 @@
+public class BinarySearchTree {
+
+	private Node root;
+
+	public BinarySearchTree() {
+		root = null;
+	}
+	
+	public Node getRoot(){
+		return root;
+	}
+	
+
+	public void insert(int data) {
+		root = insert(root, data);
+	}
+
+	private Node insert(Node node, int data) {
+		if (node == null)
+			node = new Node(data);
+		else {
+			if (data <= node.data)
+				node.left = insert(node.left, data);
+			else
+				node.right = insert(node.right, data);
+		}
+		return node;
+	}
+
+	public boolean remove(int data) {
+		Node parent = root;
+		Node current = root;
+		boolean isLeftChild = false;
+		while (current.data != data) {
+			parent = current;
+			if (current.data > data) {
+				isLeftChild = true;
+				current = current.left;
+			} else {
+				isLeftChild = false;
+				current = current.right;
+			}
+			if (current == null) {
+				return false;
+			}
+		}
+
+		if (current.left == null && current.right == null) {
+			if (current == root) {
+				root = null;
+			}
+			if (isLeftChild == true) {
+				parent.left = null;
+			} else {
+				parent.right = null;
+			}
+		}
